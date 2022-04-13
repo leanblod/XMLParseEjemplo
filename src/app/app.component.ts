@@ -29,17 +29,19 @@ export class AppComponent {
       });  
   }  
   parseXML(data: any) {  
-    return new Promise(resolve => {  
-      var k: string | number,  
-        arr: any = [],  
-        parser = new xml2js.Parser(  
-          {  
-            trim: true,  
-            explicitArray: true  
-          });  
-      parser.parseString(data, function (err: any, result: any) {
+    return new Promise(resolve => {
+      const arr: any = []; 
+        // parser = new xml2js.Parser(  
+        //   {  
+        //     trim: true,  
+        //     explicitArray: true  
+        //   });
+      xml2js.parseString(data, {  
+        trim: true,  
+        explicitArray: true  
+      }, function (err: any, result: any) {
         var lista = result.TravelerinformationResponse.travelers[0].Travelerinformation;
-        console.log(parser);
+        console.log(result);
         for (let item of lista) {
           arr.push({  
             id: item.id[0],
