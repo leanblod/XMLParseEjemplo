@@ -22,37 +22,33 @@ export class AppComponent {
         responseType: 'text',
       }
       ).subscribe((data) => {  
-        this.parseXML(data)  
-          .then((data) => {  
-            this.xmlItems = data;  
-          });  
+        this.xmlItems = this.parseXML(data);
       });  
   }  
-  parseXML(data: any) {  
-    return new Promise(resolve => {
-      const arr: any = []; 
-        // parser = new xml2js.Parser(  
-        //   {  
-        //     trim: true,  
-        //     explicitArray: true  
-        //   });
-      xml2js.parseString(data, {  
-        trim: true,  
-        explicitArray: true  
-      }, function (err: any, result: any) {
-        var lista = result.TravelerinformationResponse.travelers[0].Travelerinformation;
-        console.log(result);
-        for (let item of lista) {
-          arr.push({  
-            id: item.id[0],
-            name: item.name[0],
-            email: item.email[0],
-            adderes: item.adderes[0],
-            createdat: item.createdat[0],
-          });
-        }  
-        resolve(arr);  
-      });  
-    });  
-  }  
+  parseXML(data: any) {
+    const arr: any = []; 
+      // parser = new xml2js.Parser(  
+      //   {  
+      //     trim: true,  
+      //     explicitArray: true  
+      //   });
+    xml2js.parseString(data, {  
+      trim: true,  
+      explicitArray: true  
+    }, function (err: any, result: any) {
+      var lista = result.TravelerinformationResponse.travelers[0].Travelerinformation;
+      console.log(result);
+      for (let item of lista) {
+        arr.push({  
+          id: item.id[0],
+          name: item.name[0],
+          email: item.email[0],
+          adderes: item.adderes[0],
+          createdat: item.createdat[0],
+        });
+      }
+    });
+
+    return arr;
+  }
 } 
